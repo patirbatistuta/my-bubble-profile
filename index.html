@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bubble Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HALAMAN UTAMA -->
+        <div id="mainPage">
+            <h1>✨ My Bubble Profile ✨</h1>
+            <button id="joinButton" class="btn btn-primary">🚀 Gabung Sekarang!</button>
+            <div id="bubbleContainer">
+                <p class="empty-msg">✨ Belum ada anggota, jadilah yang pertama!</p>
+            </div>
+        </div>
+
+        <!-- HALAMAN REGISTRASI -->
+        <div id="registerPage" class="hidden">
+            <h2>🎉 Daftar Jadi Anggota!</h2>
+            <div class="form-container">
+                <form id="registerForm">
+                    <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                    <input type="number" id="umur" placeholder="Umur" required>
+                    <input type="text" id="domisili" placeholder="Domisili" required>
+
+                    <select id="kesibukan" required>
+                        <option value="">Pilih Kesibukan</option>
+                        <option value="Sekolah">Sekolah</option>
+                        <option value="Kuliah">Kuliah</option>
+                        <option value="Bekerja">Bekerja</option>
+                    </select>
+
+                    <div id="sekolahFields" class="conditional-fields">
+                        <input type="text" id="namaSekolah" placeholder="Nama Sekolah">
+                        <input type="text" id="kelas" placeholder="Kelas">
+                    </div>
+
+                    <div id="kuliahFields" class="conditional-fields">
+                        <input type="text" id="namaKampus" placeholder="Nama Kampus">
+                        <input type="text" id="jurusan" placeholder="Jurusan">
+                    </div>
+
+                    <textarea id="wishlist" placeholder="Wishlist tahun ini..."></textarea>
+                    <input type="file" id="fotoProfile" accept="image/*">
+
+                    <label for="bubbleWarna">🎨 Warna Bubble:</label>
+                    <input type="color" id="bubbleWarna" value="#6366f1">
+
+                    <button type="submit" class="btn btn-primary btn-submit">🚀 Buat Bubble-ku!</button>
+                </form>
+                <button id="backButton" class="btn btn-secondary">⬅ Kembali</button>
+            </div>
+        </div>
+
+        <!-- MODAL -->
+        <div id="profileModal" class="modal hidden">
+            <div class="modal-content">
+                <button class="close-btn" id="closeModal">&times;</button>
+                <div id="profileDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
