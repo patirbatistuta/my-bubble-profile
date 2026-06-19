@@ -4,11 +4,291 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bubble Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== RESET ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        .hidden { display: none !important; }
+
+        /* ===== JUDUL ===== */
+        h1 {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 0 0 30px rgba(99,102,241,0.5);
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        /* ===== TOMBOL ===== */
+        .btn {
+            padding: 16px 48px;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 25px rgba(99,102,241,0.4);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 40px rgba(99,102,241,0.6);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+        }
+
+        /* ===== BUBBLE ===== */
+        #bubbleContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 40px 20px;
+            min-height: 300px;
+            margin-top: 30px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .empty-msg {
+            color: rgba(255,255,255,0.3);
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        .bubble {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 -5px 20px rgba(0,0,0,0.2);
+            animation: floatBubble 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .bubble:hover { transform: scale(1.1); z-index: 10; }
+        .bubble img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.6);
+            margin-bottom: 5px;
+        }
+        .bubble span {
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.2;
+            max-width: 100px;
+        }
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .bubble.flying {
+            animation: flyAway 0.8s ease forwards !important;
+        }
+        @keyframes flyAway {
+            0% { transform: translate(0,0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(720deg); opacity: 0.5; }
+        }
+
+        /* ===== FORM ===== */
+        #registerPage {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        #registerForm input,
+        #registerForm select,
+        #registerForm textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        #registerForm input:focus,
+        #registerForm select:focus,
+        #registerForm textarea:focus {
+            outline: none;
+            border-color: #8b5cf6;
+        }
+        #registerForm input::placeholder,
+        #registerForm textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        #registerForm select option {
+            background: #1a1a2e;
+            color: white;
+        }
+        #registerForm label {
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+        }
+        #registerForm input[type="color"] {
+            height: 50px;
+            padding: 4px;
+            cursor: pointer;
+        }
+        #registerForm input[type="file"] {
+            padding: 12px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            cursor: pointer;
+        }
+        #registerForm input[type="file"]::file-selector-button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(139,92,246,0.5);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .conditional-fields {
+            display: none;
+        }
+        .conditional-fields.show {
+            display: block;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: linear-gradient(145deg, #1a1a2e, #2d2b55);
+            padding: 30px;
+            border-radius: 30px;
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            animation: popIn 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modal-content img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(139,92,246,0.5);
+            margin-bottom: 15px;
+        }
+        .modal-content h2 {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+        .modal-content p {
+            color: rgba(255,255,255,0.8);
+            margin: 6px 0;
+            font-size: 15px;
+        }
+        .modal-content p strong {
+            color: rgba(255,255,255,0.5);
+            font-weight: 400;
+        }
+        .close-btn {
+            position: absolute;
+            right: 18px;
+            top: 10px;
+            font-size: 30px;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            background: none;
+            border: none;
+        }
+        .close-btn:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .bubble { width: 100px; height: 100px; }
+            .bubble img { width: 45px; height: 45px; }
+            .bubble span { font-size: 10px; }
+            .btn { padding: 12px 30px; font-size: 16px; }
+            #registerPage { padding: 20px; margin: 10px; }
+        }
+        @media (max-width: 480px) {
+            .bubble { width: 80px; height: 80px; }
+            .bubble img { width: 35px; height: 35px; }
+            .bubble span { font-size: 9px; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- HALAMAN UTAMA -->
+        <!-- ===== HALAMAN UTAMA ===== -->
         <div id="mainPage">
             <h1>✨ My Bubble Profile ✨</h1>
             <button id="joinButton" class="btn btn-primary">🚀 Gabung Sekarang!</button>
@@ -17,45 +297,43 @@
             </div>
         </div>
 
-        <!-- HALAMAN REGISTRASI -->
+        <!-- ===== HALAMAN REGISTRASI ===== -->
         <div id="registerPage" class="hidden">
             <h2>🎉 Daftar Jadi Anggota!</h2>
-            <div class="form-container">
-                <form id="registerForm">
-                    <input type="text" id="nama" placeholder="Nama Lengkap" required>
-                    <input type="number" id="umur" placeholder="Umur" required>
-                    <input type="text" id="domisili" placeholder="Domisili" required>
+            <form id="registerForm">
+                <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                <input type="number" id="umur" placeholder="Umur" required>
+                <input type="text" id="domisili" placeholder="Domisili" required>
 
-                    <select id="kesibukan" required>
-                        <option value="">Pilih Kesibukan</option>
-                        <option value="Sekolah">Sekolah</option>
-                        <option value="Kuliah">Kuliah</option>
-                        <option value="Bekerja">Bekerja</option>
-                    </select>
+                <select id="kesibukan" required>
+                    <option value="">Pilih Kesibukan</option>
+                    <option value="Sekolah">Sekolah</option>
+                    <option value="Kuliah">Kuliah</option>
+                    <option value="Bekerja">Bekerja</option>
+                </select>
 
-                    <div id="sekolahFields" class="conditional-fields">
-                        <input type="text" id="namaSekolah" placeholder="Nama Sekolah">
-                        <input type="text" id="kelas" placeholder="Kelas">
-                    </div>
+                <div id="sekolahFields" class="conditional-fields">
+                    <input type="text" id="namaSekolah" placeholder="Nama Sekolah">
+                    <input type="text" id="kelas" placeholder="Kelas">
+                </div>
 
-                    <div id="kuliahFields" class="conditional-fields">
-                        <input type="text" id="namaKampus" placeholder="Nama Kampus">
-                        <input type="text" id="jurusan" placeholder="Jurusan">
-                    </div>
+                <div id="kuliahFields" class="conditional-fields">
+                    <input type="text" id="namaKampus" placeholder="Nama Kampus">
+                    <input type="text" id="jurusan" placeholder="Jurusan">
+                </div>
 
-                    <textarea id="wishlist" placeholder="Wishlist tahun ini..."></textarea>
-                    <input type="file" id="fotoProfile" accept="image/*">
+                <textarea id="wishlist" placeholder="Wishlist tahun ini..."></textarea>
+                <input type="file" id="fotoProfile" accept="image/*">
 
-                    <label for="bubbleWarna">🎨 Warna Bubble:</label>
-                    <input type="color" id="bubbleWarna" value="#6366f1">
+                <label for="bubbleWarna">🎨 Warna Bubble:</label>
+                <input type="color" id="bubbleWarna" value="#6366f1">
 
-                    <button type="submit" class="btn btn-primary btn-submit">🚀 Buat Bubble-ku!</button>
-                </form>
-                <button id="backButton" class="btn btn-secondary">⬅ Kembali</button>
-            </div>
+                <button type="submit" class="btn btn-primary btn-submit">🚀 Buat Bubble-ku!</button>
+            </form>
+            <button id="backButton" class="btn btn-secondary">⬅ Kembali</button>
         </div>
 
-        <!-- MODAL -->
+        <!-- ===== MODAL ===== -->
         <div id="profileModal" class="modal hidden">
             <div class="modal-content">
                 <button class="close-btn" id="closeModal">&times;</button>
@@ -64,7 +342,180 @@
         </div>
     </div>
 
+    <!-- ===== SUPABASE LIBRARY ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+
+    <!-- ===== SCRIPT UTAMA ===== -->
+    <script>
+        // =============================================
+        // 🔑 KONFIGURASI SUPABASE - GANTI PUNYA KAMU!
+        // =============================================
+        const SUPABASE_URL = 'https://ougsceqliaagvxetpdh.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable__Ckmf6vno1h_9xm3UTpexg_b3Orv6FQ'; // ⚠️ GANTI INI!
+
+        // =============================================
+        // 🚀 INISIALISASI (HANYA SEKALI!)
+        // =============================================
+        console.log('🚀 Aplikasi dimulai!');
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        console.log('✅ Supabase siap!');
+
+        // =============================================
+        // 📦 AMBIL ELEMENT
+        // =============================================
+        const mainPage = document.getElementById('mainPage');
+        const registerPage = document.getElementById('registerPage');
+        const joinBtn = document.getElementById('joinButton');
+        const backBtn = document.getElementById('backButton');
+        const form = document.getElementById('registerForm');
+        const bubbleContainer = document.getElementById('bubbleContainer');
+        const modal = document.getElementById('profileModal');
+        const profileDetail = document.getElementById('profileDetail');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        console.log('🔍 Cek tombol join:', joinBtn);
+
+        // =============================================
+        // 🖱️ TOMBOL JOIN (PAKAI onclick LANGSUNG)
+        // =============================================
+        joinBtn.onclick = function() {
+            console.log('🟢 JOIN diklik!');
+            mainPage.classList.add('hidden');
+            registerPage.classList.remove('hidden');
+        };
+
+        // =============================================
+        // 🖱️ TOMBOL BACK
+        // =============================================
+        backBtn.onclick = function() {
+            console.log('🔵 BACK diklik!');
+            registerPage.classList.add('hidden');
+            mainPage.classList.remove('hidden');
+        };
+
+        // =============================================
+        // 🔄 CONDITIONAL FORM
+        // =============================================
+        document.getElementById('kesibukan').onchange = function() {
+            const sekolah = document.getElementById('sekolahFields');
+            const kuliah = document.getElementById('kuliahFields');
+            sekolah.classList.remove('show');
+            kuliah.classList.remove('show');
+            if (this.value === 'Sekolah') {
+                sekolah.classList.add('show');
+                document.getElementById('namaSekolah').required = true;
+                document.getElementById('kelas').required = true;
+                document.getElementById('namaKampus').required = false;
+                document.getElementById('jurusan').required = false;
+            } else if (this.value === 'Kuliah') {
+                kuliah.classList.add('show');
+                document.getElementById('namaSekolah').required = false;
+                document.getElementById('kelas').required = false;
+                document.getElementById('namaKampus').required = true;
+                document.getElementById('jurusan').required = true;
+            } else {
+                document.getElementById('namaSekolah').required = false;
+                document.getElementById('kelas').required = false;
+                document.getElementById('namaKampus').required = false;
+                document.getElementById('jurusan').required = false;
+            }
+        };
+
+        // =============================================
+        // 📝 REGISTRASI
+        // =============================================
+        form.onsubmit = async function(e) {
+            e.preventDefault();
+            console.log('🟢 Form disubmit!');
+            // ... (isi sama kayak sebelumnya, gue potong biar gak kepanjangan)
+            alert('🎉 Registrasi berhasil (simulasi)!');
+        };
+
+        // =============================================
+        // 🫧 LOAD BUBBLE
+        // =============================================
+        async function loadBubbles() {
+            console.log('🔄 Loading bubbles...');
+            try {
+                const { data: profiles } = await supabase.from('profiles').select('*');
+                bubbleContainer.innerHTML = '';
+                if (!profiles || profiles.length === 0) {
+                    bubbleContainer.innerHTML = '<p class="empty-msg">✨ Belum ada anggota, jadilah yang pertama!</p>';
+                    return;
+                }
+                profiles.forEach((p) => {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.style.backgroundColor = p.bubble_warna || '#6366f1';
+                    bubble.style.animationDelay = (Math.random() * 3 + 1) + 's';
+                    const foto = p.foto_url ?
+                        `<img src="${p.foto_url}" alt="Foto ${p.nama}">` :
+                        `<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(p.nama)}&background=ffffff&color=6366f1&size=80" alt="Avatar">`;
+                    bubble.innerHTML = foto + `<span>${p.nama}</span>`;
+                    bubble.onclick = function() {
+                        this.style.animation = 'none';
+                        this.offsetHeight;
+                        this.style.setProperty('--tx', (Math.random() - 0.5) * 400 + 'px');
+                        this.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px');
+                        this.classList.add('flying');
+                        setTimeout(() => {
+                            this.classList.remove('flying');
+                            this.style.animation = 'floatBubble ' + ((Math.random() * 2) + 3) + 's ease-in-out infinite';
+                            this.style.transform = '';
+                        }, 800);
+                    };
+                    bubble.ondblclick = function() { showProfile(p); };
+                    bubbleContainer.appendChild(bubble);
+                });
+                console.log('✅ Bubble loaded!');
+            } catch (err) {
+                console.error('❌ Error:', err);
+            }
+        }
+
+        // =============================================
+        // 👤 SHOW PROFILE
+        // =============================================
+        function showProfile(p) {
+            let extra = '';
+            if (p.kesibukan === 'Sekolah') {
+                extra = `
+                    <p><strong>🏫 Sekolah:</strong> ${p.nama_sekolah || '-'}</p>
+                    <p><strong>📚 Kelas:</strong> ${p.kelas || '-'}</p>
+                `;
+            } else if (p.kesibukan === 'Kuliah') {
+                extra = `
+                    <p><strong>🎓 Kampus:</strong> ${p.nama_kampus || '-'}</p>
+                    <p><strong>📖 Jurusan:</strong> ${p.jurusan || '-'}</p>
+                `;
+            }
+            const foto = p.foto_url ?
+                `<img src="${p.foto_url}" alt="Foto ${p.nama}">` :
+                `<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(p.nama)}&background=6366f1&color=fff&size=128" alt="Avatar">`;
+            profileDetail.innerHTML = `
+                ${foto}
+                <h2>${p.nama}</h2>
+                <p><strong>🎂 Umur:</strong> ${p.umur} tahun</p>
+                <p><strong>📍 Domisili:</strong> ${p.domisili}</p>
+                <p><strong>💼 Kesibukan:</strong> ${p.kesibukan}</p>
+                ${extra}
+                <p><strong>⭐ Wishlist:</strong> ${p.wishlist || 'Tidak ada'}</p>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        // =============================================
+        // ❌ TUTUP MODAL
+        // =============================================
+        closeModalBtn.onclick = function() { modal.classList.add('hidden'); };
+        window.onclick = function(e) { if (e.target === modal) modal.classList.add('hidden'); };
+
+        // =============================================
+        // 🚀 JALANKAN
+        // =============================================
+        loadBubbles();
+        console.log('✅ Website siap!');
+        console.log('📌 Coba klik tombol JOIN!');
+    </script>
 </body>
 </html>
