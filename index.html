@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruang Bubble</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="mainPage">
+        <h1>✨ Ruang Bubble ✨</h1>
+        <button id="joinButton" class="btn-primary">Gabung Sekarang!</button>
+        <div id="bubbleContainer" class="bubble-container"></div>
+    </div>
+
+    <div id="registerPage" style="display: none;">
+        <h2>🎉 Daftar Jadi Anggota!</h2>
+        <form id="registerForm">
+            <input type="text" id="nama" placeholder="Nama Lengkap" required>
+            <input type="number" id="umur" placeholder="Umur" required>
+            <input type="text" id="domisili" placeholder="Domisili" required>
+            <select id="kesibukan" required>
+                <option value="">Pilih Kesibukan</option>
+                <option value="Sekolah">Sekolah</option>
+                <option value="Kuliah">Kuliah</option>
+                <option value="Bekerja">Bekerja</option>
+            </select>
+            <div id="sekolahFields" style="display: none;">
+                <input type="text" id="namaSekolah" placeholder="Nama Sekolah">
+                <input type="text" id="kelas" placeholder="Kelas">
+            </div>
+            <div id="kuliahFields" style="display: none;">
+                <input type="text" id="namaKampus" placeholder="Nama Kampus">
+                <input type="text" id="jurusan" placeholder="Jurusan">
+            </div>
+            <textarea id="wishlist" placeholder="Wishlist tahun ini..."></textarea>
+            <input type="file" id="fotoProfile" accept="image/*">
+            <label for="bubbleWarna">🎨 Warna Bubble:</label>
+            <input type="color" id="bubbleWarna" value="#4F46E5">
+            <button type="submit" class="btn-primary">🚀 Buat Bubble-ku!</button>
+        </form>
+        <button id="backButton" class="btn-secondary">⬅ Kembali</button>
+    </div>
+
+    <div id="profileModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="profileDetail"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
