@@ -172,7 +172,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- HALAMAN UTAMA -->
         <div id="mainPage">
             <h1>✨ My Bubble Profile ✨</h1>
             <button id="joinButton" class="btn btn-primary">🚀 Gabung Sekarang!</button>
@@ -181,7 +180,6 @@
             </div>
         </div>
 
-        <!-- HALAMAN REGISTRASI -->
         <div id="registerPage" class="hidden">
             <h2>🎉 Daftar Jadi Anggota!</h2>
             <form id="registerForm">
@@ -211,7 +209,6 @@
             <button id="backButton" class="btn btn-secondary">⬅ Kembali</button>
         </div>
 
-        <!-- MODAL -->
         <div id="profileModal" class="modal hidden">
             <div class="modal-content">
                 <button class="close-btn" id="closeModal">&times;</button>
@@ -220,21 +217,21 @@
         </div>
     </div>
 
-    <!-- ===== SUPABASE LIBRARY ===== -->
+    <!-- SUPABASE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- ===== SCRIPT UTAMA - HANYA SATU KALI DEKLARASI! ===== -->
+    <!-- SCRIPT UTAMA - CUMA 1 DEKLARASI! -->
     <script>
-        // 🔑 KONFIGURASI SUPABASE - GANTI PUNYA KAMU!
+        // ===== KONFIGURASI =====
         const SUPABASE_URL = 'https://ougsceqliaagvxetpdh.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable__Ckmf6vno1h_9xm3UTpexg_b3Orv6FQ'; // ⚠️ GANTI INI!
+        const SUPABASE_ANON_KEY = 'sb_publishable__Ckmf6vno1h_9xm3UTpexg_b3Orv6FQ';
 
-        // 🚀 INISIALISASI - HANYA SEKALI!
+        // ===== INISIALISASI - CUMA SEKALI! =====
         console.log('🚀 Aplikasi dimulai...');
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('✅ Supabase client siap!');
 
-        // 📦 AMBIL ELEMENT
+        // ===== AMBIL ELEMENT =====
         const mainPage = document.getElementById('mainPage');
         const registerPage = document.getElementById('registerPage');
         const joinBtn = document.getElementById('joinButton');
@@ -245,23 +242,23 @@
         const profileDetail = document.getElementById('profileDetail');
         const closeModalBtn = document.getElementById('closeModal');
 
-        console.log('🔍 Tombol join ditemukan:', joinBtn ? '✅' : '❌');
+        console.log('🔍 Tombol join:', joinBtn ? '✅' : '❌');
 
-        // 🖱️ TOMBOL JOIN
+        // ===== TOMBOL JOIN =====
         joinBtn.addEventListener('click', function() {
             console.log('🟢 JOIN diklik!');
             mainPage.classList.add('hidden');
             registerPage.classList.remove('hidden');
         });
 
-        // 🖱️ TOMBOL BACK
+        // ===== TOMBOL BACK =====
         backBtn.addEventListener('click', function() {
             console.log('🔵 BACK diklik!');
             registerPage.classList.add('hidden');
             mainPage.classList.remove('hidden');
         });
 
-        // 🔄 CONDITIONAL FORM
+        // ===== CONDITIONAL FORM =====
         document.getElementById('kesibukan').addEventListener('change', function() {
             const sekolah = document.getElementById('sekolahFields');
             const kuliah = document.getElementById('kuliahFields');
@@ -287,7 +284,7 @@
             }
         });
 
-        // 📝 PROSES REGISTRASI
+        // ===== REGISTRASI =====
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             console.log('🟢 Form disubmit!');
@@ -309,7 +306,7 @@
                     jurusan = document.getElementById('jurusan').value;
                 }
 
-                // 📸 UPLOAD FOTO
+                // UPLOAD FOTO
                 const fileInput = document.getElementById('fotoProfile');
                 let fotoUrl = null;
                 if (fileInput.files && fileInput.files[0]) {
@@ -329,7 +326,7 @@
                     fotoUrl = urlData.publicUrl;
                 }
 
-                // 🔐 REGISTRASI
+                // REGISTRASI
                 const email = prompt('📧 Masukkan email:');
                 const password = prompt('🔑 Buat password (min 6 karakter):');
                 if (!email || !password) {
@@ -347,7 +344,7 @@
                     return;
                 }
 
-                // 💾 SIMPAN PROFILE
+                // SIMPAN PROFILE
                 const { error: insertErr } = await supabase
                     .from('profiles')
                     .insert({
@@ -384,7 +381,7 @@
             }
         });
 
-        // 🫧 LOAD BUBBLE
+        // ===== LOAD BUBBLE =====
         async function loadBubbles() {
             console.log('🔄 Loading bubbles...');
             try {
@@ -444,7 +441,7 @@
             }
         }
 
-        // 👤 SHOW PROFILE
+        // ===== SHOW PROFILE =====
         function showProfile(p) {
             console.log('👤 Menampilkan profile:', p.nama);
             let extra = '';
@@ -476,7 +473,7 @@
             modal.classList.remove('hidden');
         }
 
-        // ❌ TUTUP MODAL
+        // ===== TUTUP MODAL =====
         closeModalBtn.addEventListener('click', function() {
             modal.classList.add('hidden');
         });
@@ -486,7 +483,7 @@
             }
         });
 
-        // 🚀 JALANKAN
+        // ===== JALANKAN =====
         loadBubbles();
         console.log('✅ Website siap!');
     </script>
